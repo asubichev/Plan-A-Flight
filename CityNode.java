@@ -22,11 +22,11 @@ public class CityNode
     }
 
 
-    public String getCity() {
+    public String getName() {
         return this.city;
     }
 
-    public void setCity(String city) {
+    public void setName(String city) {
         this.city = city;
     }
 
