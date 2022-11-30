@@ -32,7 +32,7 @@ public class Main
             String origin = breh[0];
             String destination = breh[1];
             int cost = Integer.parseInt(breh[2]);
-            int time = Integer.parseInt(breh[3]);
+            int duration = Integer.parseInt(breh[3]);
             
         }
     }
