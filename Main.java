@@ -22,6 +22,7 @@ public class Main {
         }
         int numlines = scan.nextInt();
         scan.nextLine();
+        ThaList list = new ThaList();
         for (int i = 0; i < numlines; i++) {
             String line = scan.nextLine();
             String[] breh = line.split("[|]");
@@ -29,6 +30,9 @@ public class Main {
             String destination = breh[1];
             int cost = Integer.parseInt(breh[2]);
             int duration = Integer.parseInt(breh[3]);
+
+            list.addPair(origin, destination, cost, duration);
         }
+        list.print();
     }
 }
