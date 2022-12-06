@@ -87,7 +87,7 @@ public class ThaList {
         String output = "";
         CityNode one = head;
         CityNode two = head;
-        while (one.getDown() != null) {
+        while (one != null) {
             output += two.getName() + " -> ";
             while (two.getRight() != null) {
                 two = two.getRight();
@@ -95,6 +95,7 @@ public class ThaList {
             }
             output += "\n" + "V" + "\n";
             one = one.getDown();
+            two = one;
         }
         return output;
     }
