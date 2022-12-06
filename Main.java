@@ -33,6 +33,6 @@ public class Main {
 
             list.addPair(origin, destination, cost, duration);
         }
-        list.print();
+        System.out.println(list);
     }
 }

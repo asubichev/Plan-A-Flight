@@ -42,8 +42,10 @@ public class ThaList {
                 }
                 // if we broke, this if statement should fail
                 if (temp.getDown() == null) {
-                    temp.setDown(new CityNode(name1, 0, 0));
-                    temp = temp.getDown();
+                    if (!temp.getName().equals(name1)) {
+                        temp.setDown(new CityNode(name1, 0, 0));
+                        temp = temp.getDown();
+                    }
                 }
             }
             // we're now at the source node, need to add destination
@@ -65,8 +67,10 @@ public class ThaList {
                 }
                 // reached node, or end w/o find
                 if (temp.getDown() == null) {
-                    temp.setDown(new CityNode(name2, 0, 0));
-                    temp = temp.getDown();
+                    if (!temp.getName().equals(name2)) {
+                        temp.setDown(new CityNode(name2, 0, 0));
+                        temp = temp.getDown();
+                    }
                 }
             }
             while (temp.getRight() != null) {
@@ -74,14 +78,24 @@ public class ThaList {
                     return false;
                 temp = temp.getRight();
             }
-            temp.setRight(new CityNode(name2, cost, duration));
+            temp.setRight(new CityNode(name1, cost, duration));
         }
         return true;
     }
 
     public String toString() {
         String output = "";
-
+        CityNode one = head;
+        CityNode two = head;
+        while (one.getDown() != null) {
+            output += two.getName() + " -> ";
+            while (two.getRight() != null) {
+                two = two.getRight();
+                output += two.getName() + " -> ";
+            }
+            output += "\n" + "V" + "\n";
+            one = one.getDown();
+        }
         return output;
     }
 
