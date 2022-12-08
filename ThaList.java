@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
+import java.util.*;
 
 public class ThaList {
 
@@ -102,37 +104,65 @@ public class ThaList {
         return output;
     }
 
-    public String findPath(CityNode origin, CityNode destination) {
-        ArrayList<ArrayList<CityNode>> routes = new ArrayList<>();
-        Stack<CityNode> stk = new Stack<>();
-        Map<CityNode, CityNode> visited = new HashMap<>();
+    public String findPath(String origin, String destination) {
+        Stack<CityNode> stk = new Stack<>(); // keep nodes, not just name for backtracking purposes
+        Set<String> visited = new HashSet<>();
 
-        stk.push(origin);
+        CityNode temp = findOrigin(origin);
+        stk.push(temp);
 
         while (!stk.isEmpty()) {
-            CityNode node = stk.pop();
-            visited.put(node, node);
-
-            if (node == destination) {
-                ArrayList<CityNode> route = new ArrayList<>();
-                route.add(node);
-                while (visited.get(node) != null) {
-                    node = visited.get(node);
-                    route.add(0, node);
-                }
-                routes.add(route);
-            }
-
-            CityNode temp = node;
-            while (temp != null) {
-                if (!visited.containsKey(temp)) {
+            if (temp.getRight() != null) {
+                temp = temp.getRight();
+                if (!visited.contains(temp.getName())) {
                     stk.push(temp);
-                    visited.put(temp, node);
+                    // then jump to origin node
+                    temp = findOrigin(temp.getName());
+                    visited.add(temp.getName());
+                } else if (temp.getName().equals(destination)) {
+
                 }
+            } else {
+                // reached dead end, pop and go to last thread
+                stk.pop();
+                temp = stk.peek();
             }
         }
+
+        // while (!stk.isEmpty()) {
+        // CityNode node = stk.pop();
+        // visited.add(node.getName());
+
+        // if (node == destination) {
+        // ArrayList<CityNode> route = new ArrayList<>();
+        // route.add(node);
+        // while (visited.get(node) != null) {
+        // node = visited.get(node);
+        // route.add(0, node);
+        // }
+        // routes.add(route);
+        // }
+
+        // CityNode temp = node;
+        // while (temp != null) {
+        // if (!visited.containsKey(temp)) {
+        // stk.push(temp);
+        // visited.put(temp, node);
+        // }
+        // }
+        // }
         // convert routes to String
         return "";
+    }
+
+    public CityNode findOrigin(String request) {
+        CityNode temp = head;
+        while (temp != null) {
+            if (temp.getName().equals(request))
+                return temp;
+            temp = temp.getDown();
+        }
+        return null;
     }
 
     public CityNode getHead() {

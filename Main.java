@@ -32,6 +32,6 @@ public class Main {
 
             list.addPair(origin, destination, cost, duration);
         }
-        System.out.println(list);
+        list.findPath(null, null)
     }
 }
