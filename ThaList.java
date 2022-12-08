@@ -1,8 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.*;
 
 public class ThaList {
@@ -104,9 +101,16 @@ public class ThaList {
         return output;
     }
 
-    public String findPath(String origin, String destination) {
+    public String findPath(String origin, String destination, int flightNum, boolean moneyIsAnIssue) {
+        final int MAX_PATHS = 3;
+        int pathCount = 0;
+
+        String output = "";
         Stack<CityNode> stk = new Stack<>(); // keep nodes, not just name for backtracking purposes
         Set<String> visited = new HashSet<>();
+        Map<Integer, String> routes = new HashMap<>();
+        float cost = 0;
+        int time = 0;
 
         CityNode temp = findOrigin(origin);
         stk.push(temp);
@@ -120,14 +124,50 @@ public class ThaList {
                     temp = findOrigin(temp.getName());
                     visited.add(temp.getName());
                 } else if (temp.getName().equals(destination)) {
+                    pathCount++;
+                    Stack<CityNode> tmpstk = new Stack<>();
+                    cost += temp.getCost();
+                    time += temp.getTime();
+                    while (!stk.isEmpty()) {
+                        cost += stk.peek().getCost();
+                        time += stk.peek().getTime();
+                        tmpstk.push(stk.pop());
+                    }
+                    // at this point, tmpstk will pop in order of current path
+                    // tmpstk is reverse of what stk was
+                    String rout = "";
+                    while (!tmpstk.isEmpty()) {
+                        rout += tmpstk.pop().getName() + " -> ";
+                    }
+                    NumberFormat formattr = new DecimalFormat("0.00");
+                    rout += destination + ". Time: " + time + " Cost: " + formattr.format(cost);
+                    if (moneyIsAnIssue)
+                        routes.put((int) cost, rout);
+                    else
+                        routes.put(time, rout);
 
+                    if (pathCount == MAX_PATHS)
+                        break;
                 }
             } else {
                 // reached dead end, pop and go to last thread
                 stk.pop();
                 temp = stk.peek();
             }
+            output += "Flight" + flightNum + ": " + origin + ", " + destination + "(";
+            if (moneyIsAnIssue)
+                output += "Cost";
+            else
+                output += "Time";
+            output += ")";
         }
+        SortedSet<Integer> keys = new TreeSet<>(routes.keySet());
+        int i = 1;
+        for (int key : keys) {
+            output += "Path " + i + ": " + routes.get(key);
+            i++;
+        }
+        return output;
 
         // while (!stk.isEmpty()) {
         // CityNode node = stk.pop();
@@ -152,7 +192,6 @@ public class ThaList {
         // }
         // }
         // convert routes to String
-        return "";
     }
 
     public CityNode findOrigin(String request) {
