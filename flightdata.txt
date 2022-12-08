@@ -1,4 +1,4 @@
-11
+15
 Dallas|New York City|98|47
 Austin|Dallas|95|39
 Dallas|Houston|101|51
@@ -10,3 +10,7 @@ Washington|Seattle|242|33
 Dallas|Philadelphia|212|29
 Dallas|San Francisco|60|29
 Atlanta|Dallas|155.69|251
+Houston|Atlanta|25.99|10
+Philadelphia|Moth|211|167
+Moth|Houston|1|51
+Houston|Oklahoma City|46|25
