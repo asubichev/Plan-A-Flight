@@ -66,4 +66,8 @@ public class CityNode {
     public boolean equals(Object o) {
         return ((CityNode) o).getName().equals(this.city);
     }
+
+    public String toString() {
+        return this.city;
+    }
 }

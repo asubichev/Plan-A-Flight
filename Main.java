@@ -32,8 +32,9 @@ public class Main {
 
             list.addPair(origin, destination, cost, duration);
         }
-        for (int i = 0; i < 3; i++) {
-            String bee = list.findPath("Brusells", "null", i, true);
+        System.out.println(list);
+        for (int i = 1; i < 2; i++) {
+            String bee = list.findPath("Austin", "Houston", i, true);
             System.out.println(bee);
         }
     }

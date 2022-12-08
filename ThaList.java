@@ -105,6 +105,14 @@ public class ThaList {
         final int MAX_PATHS = 3;
         int pathCount = 0;
 
+        CityNode verify = findOrigin(origin);
+        if (verify == null)
+            return "origin doesn't exist";
+        verify = findOrigin(destination);
+        if (verify == null)
+            return "destination doesn't exist";
+        verify = null;
+
         String output = "";
         Stack<CityNode> stk = new Stack<>(); // keep nodes, not just name for backtracking purposes
         Set<String> visited = new HashSet<>();
@@ -113,16 +121,19 @@ public class ThaList {
         int time = 0;
 
         CityNode temp = findOrigin(origin);
+        // we got to temp from null, so <Pair<CityNode, CityNode>>
         stk.push(temp);
+        visited.add(origin);
 
         while (!stk.isEmpty()) {
             if (temp.getRight() != null) {
                 temp = temp.getRight();
-                if (!visited.contains(temp.getName())) {
+                if (!visited.contains(temp.getName()) && !temp.getName().equals(destination)) {
                     stk.push(temp);
                     // then jump to origin node
                     temp = findOrigin(temp.getName());
                     visited.add(temp.getName());
+                    // !visited.contains(temp.getName()) &&
                 } else if (temp.getName().equals(destination)) {
                     pathCount++;
                     Stack<CityNode> tmpstk = new Stack<>();
@@ -137,30 +148,39 @@ public class ThaList {
                     // tmpstk is reverse of what stk was
                     String rout = "";
                     while (!tmpstk.isEmpty()) {
-                        rout += tmpstk.pop().getName() + " -> ";
+                        rout += tmpstk.peek().getName() + " -> ";
+                        stk.push(tmpstk.pop());
                     }
                     NumberFormat formattr = new DecimalFormat("0.00");
-                    rout += destination + ". Time: " + time + " Cost: " + formattr.format(cost);
+                    rout += destination + ". Time: " + time + " Cost: " + formattr.format(cost) + "\n";
                     if (moneyIsAnIssue)
                         routes.put((int) cost, rout);
                     else
                         routes.put(time, rout);
 
+                    // reset for next route
+                    cost = 0;
+                    time = 0;
+
+                    // only outputting top 3 cheapest
+                    // then we break to output build
                     if (pathCount == MAX_PATHS)
                         break;
+                    visited.add(temp.getName());
                 }
             } else {
-                // reached dead end, pop and go to last thread
-                stk.pop();
-                temp = stk.peek();
+                // reached dead end, pop and go to prev thread
+                // TODO:need to not just go to previous linkedList from the start though
+                // need to actually go back to the exact place we were in in that list
+                temp = stk.pop();
             }
-            output += "Flight" + flightNum + ": " + origin + ", " + destination + "(";
-            if (moneyIsAnIssue)
-                output += "Cost";
-            else
-                output += "Time";
-            output += ")";
         }
+        output += "Flight " + flightNum + ": " + origin + ", " + destination + " (";
+        if (moneyIsAnIssue)
+            output += "Cost";
+        else
+            output += "Time";
+        output += ")\n";
         SortedSet<Integer> keys = new TreeSet<>(routes.keySet());
         int i = 1;
         for (int key : keys) {
@@ -168,30 +188,6 @@ public class ThaList {
             i++;
         }
         return output;
-
-        // while (!stk.isEmpty()) {
-        // CityNode node = stk.pop();
-        // visited.add(node.getName());
-
-        // if (node == destination) {
-        // ArrayList<CityNode> route = new ArrayList<>();
-        // route.add(node);
-        // while (visited.get(node) != null) {
-        // node = visited.get(node);
-        // route.add(0, node);
-        // }
-        // routes.add(route);
-        // }
-
-        // CityNode temp = node;
-        // while (temp != null) {
-        // if (!visited.containsKey(temp)) {
-        // stk.push(temp);
-        // visited.put(temp, node);
-        // }
-        // }
-        // }
-        // convert routes to String
     }
 
     public CityNode findOrigin(String request) {
