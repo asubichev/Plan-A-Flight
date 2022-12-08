@@ -1,8 +1,12 @@
-7
-Dallas|Austin|98|47
-Austin|Houston|95|39
+11
+Dallas|New York City|98|47
+Austin|Dallas|95|39
 Dallas|Houston|101|51
-Austin|Chicago|144|192
-Austin|Georgia|144|192
-Austin|New York|144|192
-Austin|San Francisco|144|192
+Austin|Chicago|142|192
+Denver|Georgia|44|125
+Atlanta|Oklahoma City|152.15|251
+Washington|Denver|168|182
+Washington|Seattle|242|33
+Dallas|Philadelphia|212|29
+Dallas|San Francisco|60|29
+Atlanta|Dallas|155.69|251

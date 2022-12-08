@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javax.activity.InvalidActivityException;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -25,17 +27,16 @@ public class Main {
         for (int i = 0; i < numlines; i++) {
             String line = scan.nextLine();
             String[] breh = line.split("[|]");
-            String origin = breh[0];
-            String destination = breh[1];
-            int cost = Integer.parseInt(breh[2]);
-            int duration = Integer.parseInt(breh[3]);
+            // Not sure if this is the proper exception to use
+            if (breh.length != 4)
+                throw new IllegalArgumentException("Incorrect input detected. Please check input file.");
+            list.addPair(breh[0], breh[1], Double.parseDouble(breh[2]), Integer.parseInt(breh[3]));
 
-            list.addPair(origin, destination, cost, duration);
         }
         System.out.println(list);
-        for (int i = 1; i < 2; i++) {
-            String bee = list.findPath("Austin", "Houston", i, true);
-            System.out.println(bee);
-        }
+        String bee = list.findPath("Austin", "Houston", 1, true);
+        System.out.println(bee);
+        bee = list.findPath("Oklahoma City", "Philadelphia", 1, false);
+        System.out.println(bee);
     }
 }

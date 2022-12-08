@@ -1,7 +1,7 @@
 public class CityNode {
 
     private String city;
-    private float cost;
+    private double cost;
     private int duration;
     private CityNode down;
     private CityNode right;
@@ -14,7 +14,7 @@ public class CityNode {
         right = null;
     }
 
-    public CityNode(String city, float cost, int duration) {
+    public CityNode(String city, double cost, int duration) {
         this.city = city;
         this.cost = cost;
         this.duration = duration;
@@ -30,11 +30,11 @@ public class CityNode {
         this.city = city;
     }
 
-    public float getCost() {
+    public double getCost() {
         return this.cost;
     }
 
-    public void setCost(float cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 

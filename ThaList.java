@@ -24,7 +24,7 @@ public class ThaList {
         return true;
     }
 
-    public boolean addPair(String name1, String name2, int cost, int duration) {
+    public boolean addPair(String name1, String name2, double cost, int duration) {
         if (head == null) {
             head = new CityNode(name1, 0, 0);
             head.setRight(new CityNode(name2, cost, duration));
