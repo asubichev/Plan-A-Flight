@@ -1,5 +1,7 @@
-import java.security.InvalidParameterException;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 
 public class ThaList {
 
@@ -98,6 +100,39 @@ public class ThaList {
             two = one;
         }
         return output;
+    }
+
+    public String findPath(CityNode origin, CityNode destination) {
+        ArrayList<ArrayList<CityNode>> routes = new ArrayList<>();
+        Stack<CityNode> stk = new Stack<>();
+        Map<CityNode, CityNode> visited = new HashMap<>();
+
+        stk.push(origin);
+
+        while (!stk.isEmpty()) {
+            CityNode node = stk.pop();
+            visited.put(node, node);
+
+            if (node == destination) {
+                ArrayList<CityNode> route = new ArrayList<>();
+                route.add(node);
+                while (visited.get(node) != null) {
+                    node = visited.get(node);
+                    route.add(0, node);
+                }
+                routes.add(route);
+            }
+
+            CityNode temp = node;
+            while (temp != null) {
+                if (!visited.containsKey(temp)) {
+                    stk.push(temp);
+                    visited.put(temp, node);
+                }
+            }
+        }
+        // convert routes to String
+        return "";
     }
 
     public CityNode getHead() {

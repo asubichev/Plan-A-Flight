@@ -1,5 +1,8 @@
-4
+7
 Dallas|Austin|98|47
 Austin|Houston|95|39
 Dallas|Houston|101|51
 Austin|Chicago|144|192
+Austin|Georgia|144|192
+Austin|New York|144|192
+Austin|San Francisco|144|192
